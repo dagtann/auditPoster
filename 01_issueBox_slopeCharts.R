@@ -1,5 +1,4 @@
 # Slope charts Freedom house & polity ----------------------
-library('ggplot2')
 
 # fetch data -----------------------------------------------
 blueprint.qog <- within(blueprint.qog,
@@ -33,6 +32,10 @@ p <- ggplot(data = pdta, aes(x = factor(year), y = value)) +
     limits = c(0, 10), breaks = seq(1, 10, 3)
   ) +
   labs(y = 'Index Value') +
-  theme_bw(base_size = 24) +
+  theme_bw(base_size = 32) +
   theme(axis.title.x = element_blank())
-p
+ggsave(
+  plot = p, file = file.path(path.out, '01_issue_slope.png'),
+  width = plot.size, height = plot.size/1.618, dpi = 1200
+)
+rm(p, blueprint.qog)

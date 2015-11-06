@@ -5,6 +5,8 @@ if(Sys.info()['user'] == 'dag'){
   path.out <- '/Users/dag/Dropbox/data/dembar/2015/out'
   path.code <- '/Users/dag/github/auditPoster'
 }
+required.packages <- c('ggplot2')
+invisible(lapply(required.packages, library, character.only = TRUE))
 
 # fetch raw data -------------------------------------------
 library(foreign)
@@ -44,3 +46,4 @@ key.ccodeQog <- unique(
 )
 wzb.colors <- c('#0380B5', '#9E3173', '#619933')
 # Blue-ish, Red-ish, Green-ish
+plot.size <- 14
