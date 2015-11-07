@@ -27,15 +27,18 @@ pdta <- within(pdta,
 p <- ggplot(data = pdta, aes(x = factor(year), y = value)) +
   geom_point(size = 5) +
   geom_line(aes(x = as.numeric(as.factor(year)))) +
-  facet_grid(variable~cname) +
+  facet_grid(cname ~ variable) +
   scale_y_continuous( # free_y gives more non-sensical result
     limits = c(0, 10), breaks = seq(1, 10, 3)
   ) +
   labs(y = 'Index Value') +
   theme_bw(base_size = 32) +
   theme(axis.title.x = element_blank())
+
 ggsave(
   plot = p, file = file.path(path.out, '01_issue_slope.png'),
-  width = plot.size, height = plot.size/1.618, dpi = 1200
+  width = plot.size, height = plot.size/1.618, dpi = 300
 )
-rm(p, blueprint.qog)
+
+# House keeping --------------------------------------------
+rm(p)

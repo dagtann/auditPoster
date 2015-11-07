@@ -47,9 +47,9 @@ pdta <- within(pdta, {
 )
 
 scale.labs <- data.frame(             ## define scale labels
-  x = rep(1, 6),
-  y = seq(0, 100, 20),
-  labels = as.character(seq(0, 100, 20))
+  x = rep(1, 5),
+  y = seq(20, 100, 20),
+  labels = as.character(seq(20, 100, 20))
 )
 
 scale.grid <- data.frame(            ## define grid for plot
@@ -78,7 +78,7 @@ p <- ggplot(data = pdta,
     labels = c(                    ## define speaking labels
       "Individual Freedom", "Rule of Law",
       "Public\nSphere", "Competition",
-      "Horizontal Control", "Government Capability",
+      "Horizontal\nControl", "Government\nCapability",
       "Transparency", "Partici-\npation", "Representation"
     )
   ) +
@@ -91,17 +91,18 @@ p <- ggplot(data = pdta,
       override.aes = list(colour = NULL, alpha = 1)
     )
   ) +
-  theme_bw(base_size = 12) +
+  theme_bw(base_size = 16) +
   theme(
     axis.line.x = element_blank(),
     axis.line.y = element_blank(),
     axis.ticks.x = element_blank(),
     axis.ticks.y = element_blank(),
-    axis.text.x = element_text(colour = "black"),
+    axis.text.x = element_text(colour = "black", size = 9),
     axis.text.y = element_blank(),
     panel.grid = element_blank(),
     legend.position = "top",
-    legend.direction = "horizontal"
+    legend.direction = "horizontal",
+    legend.key.size = grid::unit(.8, units = 'lines')
   ) +
   coord_polar(start = 340*0.0174532925) +
   facet_grid(Year ~ Country)
