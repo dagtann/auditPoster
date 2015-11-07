@@ -19,7 +19,7 @@ p <- ggplot(data = pdta, aes(x = factor(Year), y = value)) +
     limits = c(40, 85), breaks = seq(40, 80, 10)
   ) +
   facet_grid(~Country) +
-  labs(y = 'Index Value') +
+  labs(y = 'Democratic Quality') +
   theme_bw(base_size = 32) +
   theme(axis.title.x = element_blank())
 ggsave(
