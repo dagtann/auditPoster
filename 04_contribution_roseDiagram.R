@@ -65,7 +65,7 @@ p <- ggplot(data = pdta,
   scale_fill_manual(values = wzb.colors) +
   geom_bar(
     data = scale.grid,              ## implement manual grid
-    aes(x = x, y = y, fill = NA), width = 1,
+    aes(x = x, y = y, fill = NA), width = 1, size = .3,
     colour = "grey95", position = "stack", stat = "identity"
   ) +
   geom_text(
@@ -102,7 +102,7 @@ p <- ggplot(data = pdta,
     panel.grid = element_blank(),
     legend.position = "top",
     legend.direction = "horizontal",
-    legend.key.size = grid::unit(.8, units = 'lines')
+    legend.key.size = grid::unit(1, units = 'lines')
   ) +
   coord_polar(start = 340*0.0174532925) +
   facet_grid(Year ~ Country)
@@ -110,7 +110,7 @@ p <- ggplot(data = pdta,
 ggsave(
   plot = p,
   file = file.path(path.out, '04_contribution_roseDiagram.png'),
-  width = plot.size, height = plot.size/1.618, dpi = 1200
+  width = plot.size, height = plot.size/1.618, dpi = 300
 )
 
 # Housekeeping ---------------------------------------------
