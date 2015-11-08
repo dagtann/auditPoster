@@ -5,8 +5,9 @@ if(Sys.info()['user'] == 'dag'){
   path.out <- '/Users/dag/Dropbox/data/dembar/2015/out'
   path.code <- '/Users/dag/github/auditPoster'
 }
-required.packages <- c('ggplot2')
+required.packages <- c('ggplot2', 'extrafont')
 invisible(lapply(required.packages, library, character.only = TRUE))
+loadfonts()
 
 # fetch raw data -------------------------------------------
 library(foreign)
@@ -40,10 +41,9 @@ tmp <- within(tmp, {delta.mean <- scale(DQ, scale = FALSE)})
 rm(tmp)
 
 # convenience hooks ----------------------------------------
-key.names <- c('Costa Rica', 'Denmark', 'United States')
-key.ccodeQog <- unique(
-  blueprint$CcodeQOG[blueprint$Country %in% key.names]
-)
+key.names <- c('Costa Rica', 'United States', 'Denmark')
+key.ccodeQog <- c(188, 840, 208)
+base.size <- 8 # graph font size
 wzb.colors <- c('#0380B5', '#9E3173', '#619933')
 # Blue-ish, Red-ish, Green-ish
-plot.size <- 14
+plot.size <- 3

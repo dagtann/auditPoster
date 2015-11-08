@@ -4,10 +4,15 @@
 pdta <- subset(blueprint,
   Year %in% c(1990, 2012) & CcodeQOG %in% key.ccodeQog
 )
+pdta <- within(pdta,
+  cname <- factor( # fix country order to lo -- mean -- hi
+    Country, levels = key.names, labels = key.names
+  )
+)
 
 pdta <- reshape2::melt(
   data = pdta,
-  id.vars = c('Country', 'Year'),
+  id.vars = c('cname', 'Year'),
   measure.vars = c("INDLIB", "RULEOFLAW", "PUBLIC",
     "COMPET", "MUTUCONS", "GOVCAP", "TRANSPAR", "PARTICIP",
     "REPRES"
@@ -65,14 +70,13 @@ p <- ggplot(data = pdta,
   scale_fill_manual(values = wzb.colors) +
   geom_bar(
     data = scale.grid,              ## implement manual grid
-    aes(x = x, y = y, fill = NA), width = 1, size = .3,
+    aes(x = x, y = y, fill = NA), width = 1, size = .1,
     colour = "grey95", position = "stack", stat = "identity"
   ) +
   geom_text(
     data = scale.labs, aes(x = x, y = y, label = labels,
       fill = NULL
-    ),
-    size = 4
+    ), size = .15*base.size, family = 'CMU Sans Serif'
   ) +
   scale_x_discrete(
     labels = c(                    ## define speaking labels
@@ -87,30 +91,35 @@ p <- ggplot(data = pdta,
   ) +
   labs(x = "", y = "") +
   guides(
-    fill = guide_legend(title = "Democratic Principle",
-      override.aes = list(colour = NULL, alpha = 1)
+    fill = guide_legend(
+      override.aes = list(colour = NULL)
     )
   ) +
-  theme_bw(base_size = 16) +
+  coord_polar(start = 340*0.0174532925) +
+  facet_grid(cname ~ Year) +
+  theme_bw(base_size = base.size) +
   theme(
-    axis.line.x = element_blank(),
-    axis.line.y = element_blank(),
-    axis.ticks.x = element_blank(),
-    axis.ticks.y = element_blank(),
-    axis.text.x = element_text(colour = "black", size = 9),
+    axis.title = element_blank(),
+    axis.line = element_blank(),
+    axis.ticks = element_blank(),
+    axis.text.x = element_text(size = .35*base.size),
     axis.text.y = element_blank(),
     panel.grid = element_blank(),
-    legend.position = "top",
-    legend.direction = "horizontal",
-    legend.key.size = grid::unit(1, units = 'lines')
-  ) +
-  coord_polar(start = 340*0.0174532925) +
-  facet_grid(Year ~ Country)
+    legend.direction = 'horizontal', legend.position = 'bottom',
+    legend.key.size = grid::unit(.5, 'lines'),
+    legend.key = element_rect(colour = 'transparent'),
+    legend.title = element_blank(),
+    legend.background = element_rect(fill = '#e9e9e9'),
+    text = element_text(family = 'CMU Sans Serif'),
+    plot.margin = grid::unit(c(0,0,0,0)+.1, units = 'lines'),
+    plot.background = element_rect(fill = '#e9e9e9'),
+    strip.background = element_rect(fill = 'grey65')
+  )
 
 ggsave(
   plot = p,
   file = file.path(path.out, '04_contribution_roseDiagram.png'),
-  width = plot.size, height = plot.size/1.618, dpi = 300
+  width = plot.size/1.5, height = plot.size, dpi = 300
 )
 
 # Housekeeping ---------------------------------------------
