@@ -2,7 +2,7 @@
 
 # prepare plotting data ------------------------------------
 pdta <- subset(blueprint,
-  Year %in% c(1990, 2012) & CcodeQOG %in% key.ccodeQog
+  Year %in% c(1990, 2012) & CcodeQOG %in% c(840)
 )
 pdta <- within(pdta,
   cname <- factor( # fix country order to lo -- mean -- hi
@@ -64,62 +64,44 @@ scale.grid <- data.frame(            ## define grid for plot
 
 p <- ggplot(data = pdta,
   aes(x = variable, y = value, fill = fill)) +
-  geom_bar(
-    width = 1, stat = "identity"
-  ) +
+  geom_bar(stat = "identity") +
   scale_fill_manual(values = wzb.colors) +
-  geom_bar(
-    data = scale.grid,              ## implement manual grid
-    aes(x = x, y = y, fill = NA), width = 1, size = .1,
-    colour = "grey95", position = "stack", stat = "identity"
-  ) +
-  geom_text(
-    data = scale.labs, aes(x = x, y = y, label = labels,
-      fill = NULL
-    ), size = .15*base.size, family = 'CMU Sans Serif'
-  ) +
   scale_x_discrete(
     labels = c(                    ## define speaking labels
-      "Individual Freedom", "Rule of Law",
-      "Public\nSphere", "Competition",
-      "Horizontal\nControl", "Government\nCapability",
-      "Transparency", "Partici-\npation", "Representation"
+      "Ind. Freed.", "Rule of Law",
+      "Pub. Sphere", "Competition",
+      "Horiz. Contr.", "Gov. Cap.",
+      "Transpar.", "Participat.", "Represent."
     )
   ) +
-  scale_y_continuous(
-    limits = c(0, 100), breaks = seq(0,100,10)
-  ) +
+#   scale_y_continuous(
+#     limits = c(0, 100), breaks = seq(0,100,20)
+#   ) +
   labs(x = "", y = "") +
-  guides(
-    fill = guide_legend(
-      override.aes = list(colour = NULL)
-    )
-  ) +
-  coord_polar(start = 340*0.0174532925) +
+  #coord_polar(start = 340*0.0174532925) +
   facet_grid(cname ~ Year) +
   theme_bw(base_size = base.size) +
   theme(
     axis.title = element_blank(),
     axis.line = element_blank(),
-    axis.ticks = element_blank(),
-    axis.text.x = element_text(size = .35*base.size),
-    axis.text.y = element_blank(),
-    panel.grid = element_blank(),
+    axis.ticks.y = element_blank(),
     legend.direction = 'horizontal', legend.position = 'bottom',
     legend.key.size = grid::unit(.5, 'lines'),
     legend.key = element_rect(colour = 'transparent'),
     legend.title = element_blank(),
-    legend.background = element_rect(fill = '#e9e9e9'),
-    text = element_text(family = 'CMU Sans Serif'),
-    plot.margin = grid::unit(c(0,0,0,0)+.1, units = 'lines'),
-    plot.background = element_rect(fill = '#e9e9e9'),
+    legend.background = element_rect(fill = 'transparent'),
+    text = element_text(family = 'Dahrendorf Light'),
+    plot.margin = grid::unit(c(0,.1,0,0)+.1, units = 'lines'),
+    plot.background = element_rect(fill = 'transparent', colour = 'transparent'),
     strip.background = element_rect(fill = 'grey65')
-  )
+  ) +
+  coord_flip()
 
 ggsave(
   plot = p,
   file = file.path(path.out, '04_contribution_roseDiagram.png'),
-  width = plot.size/1.5, height = plot.size, dpi = 300
+  width = plot.size/1.5, height = plot.size, dpi = 300,
+  bg = 'transparent'
 )
 
 # Housekeeping ---------------------------------------------

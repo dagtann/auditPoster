@@ -51,18 +51,19 @@ theme(
   legend.position = 'bottom', legend.direction = 'horizontal',
   legend.key = element_blank(),
   legend.key.size = grid::unit(.1, 'lines'),
-  legend.background = element_rect(fill = '#e9e9e9'),
+  legend.background = element_rect(fill = 'transparent'),
   legend.box = 'vertical',
-  text = element_text(family = 'CMU Sans Serif'),
+  text = element_text(family = 'Dahrendorf Light'),
+  axis.ticks.x = element_blank(),
   axis.title.x = element_blank(),
   plot.margin = grid::unit(rep(0, 4)+.1, units = 'lines'),
-  plot.background = element_rect(fill = '#e9e9e9', colour = '#e9e9e9'),
+  plot.background = element_rect(fill = 'transparent', colour = 'transparent'),
   strip.background = element_rect(fill = wzb.colors[3])
 )
 ggsave(
   plot = p,
   file = file.path(path.out, '02_contribution_slopeChart.png'),
-  width = plot.size/1.5, height = plot.size, dpi = 300
+  width = plot.size/1.5, height = plot.size, dpi = 300, bg = 'transparent'
 )
 
 # Housekeeping ---------------------------------------------

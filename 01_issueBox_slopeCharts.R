@@ -32,7 +32,7 @@ pdta <- within(pdta, {
 p <- ggplot(
   data = pdta, aes(x = factor(year), y = value)
 ) +
-geom_point(size = 3) +
+geom_point(size = 2) +
 geom_line(aes(x = as.numeric(as.factor(year)))) + # trick into slope chart
   facet_grid(cname ~ variable) +
   scale_y_continuous(
@@ -50,7 +50,7 @@ geom_line(aes(x = as.numeric(as.factor(year)))) + # trick into slope chart
 
 ggsave(
   plot = p, file = file.path(path.out, '01_issue_slope.png'),
-  width = plot.size/1.618, height = plot.size, dpi = 300
+  width = plot.size/1.5, height = plot.size, dpi = 300
 )
 
 # House keeping --------------------------------------------
